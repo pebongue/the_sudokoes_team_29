@@ -44,7 +44,6 @@ def is_puzzle_solved(puzzle_filled, grid_size, valid_set):
 def update_empty_blocks(unsolved_puzzle, grid_size, valid_set):
     # Process grid with Possible array values
     list_possible_values = possible_set_values(unsolved_puzzle, grid_size, valid_set)
-    print(list_possible_values)
 
     for row in range(0, grid_size):
         for col in range(0, grid_size):
@@ -82,6 +81,9 @@ def update_empty_blocks(unsolved_puzzle, grid_size, valid_set):
 def possible_set_values(unsolved_puzzle, grid_size, valid_set):
     #create an empty array to store the list of possible values 
         list_possible_values = np.empty(shape=[9,9], dtype=object )
+        for r in range(0, grid_size):
+            for c in range(0, grid_size):
+                list_possible_values[r, c] = []
 
     # Create Possible values of 1..9 for each Cell
         for row in range(0, grid_size):
@@ -98,7 +100,7 @@ def possible_set_values(unsolved_puzzle, grid_size, valid_set):
                     row_index = (row//3) * 3
                     col_index = (col//3) * 3
                     list_possible_values[row][col] = list(c - set(unsolved_puzzle[row_index:row_index+3, col_index:col_index+3].flatten()))
-    
+        print(list_possible_values)
         return list_possible_values
 
 
@@ -156,5 +158,6 @@ puzzle_file = np.array([
     [0, 7, 0, 0, 0, 0, 0, 2, 0],
     [0, 0, 0, 0, 5, 0, 0, 0, 0]
 ])
+
 solve_puzzle = update_empty_blocks(puzzle_file, puzzle_grid_size, valid_set)
 print("\n" + is_puzzle_solved(solve_puzzle, puzzle_grid_size, valid_set))
