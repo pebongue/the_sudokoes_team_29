@@ -44,6 +44,7 @@ def is_puzzle_solved(puzzle_filled, grid_size, valid_set):
 def update_empty_blocks(unsolved_puzzle, grid_size, valid_set):
     # Process grid with Possible array values
     list_possible_values = possible_set_values(unsolved_puzzle, grid_size, valid_set)
+    print(list_possible_values)
 
     for row in range(0, grid_size):
         for col in range(0, grid_size):
