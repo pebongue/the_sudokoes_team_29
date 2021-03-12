@@ -15,3 +15,13 @@ def print_soduko_board(board):
                 print(str(board[i][j]) + " ", end="")
 
 print_soduko_board(myfile)
+
+
+'''import numpy as np
+
+def open_file(filename):
+    file = open(filename)
+    return np.array(file)
+    
+print(open_file("sample.txt"))
+'''
