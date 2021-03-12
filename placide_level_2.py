@@ -4,7 +4,7 @@ import numpy as np
 
 ''' The method below is an adaption of Felicia Hsieh GitHub @feliciahsieh 
     Her solution was heavily modified to adapt to our solution.
-    
+
     (ref = https://medium.com/@feliciaSWE/solving-sudoku-with-python-numpy-and-set-95ca55f9ba01)
 
     Args:
@@ -33,6 +33,72 @@ def is_puzzle_solved(puzzle_filled, grid_size, valid_set):
         return "Correct solution!"
     else:
         return "Incorrect solution!"
+
+'''This is the second method in the @feliciahsieh series after heavy adaptation
+
+    Args:
+        puzzle_filled (ndarray): the sudoku puzzle filled with numbers
+        grid_size (int): the number of rows or columns
+        valid_set (set): it is the set {1, 2, 3, 4, 5, 6, 7, 8, 9}
+'''
+def update_empty_blocks(unsolved_puzzle, grid_size, valid_set):
+    # Process grid with Possible array values
+    list_possible_values = possible_set_values(unsolved_puzzle, grid_size, valid_set)
+
+    for row in range(0, grid_size):
+        for col in range(0, grid_size):
+            # Found correct cell value = Only 1 possible value
+            if np.size(list_possible_values[row, col]) == 1:
+                is_single_value = list_possible_values[row][col][0]
+                unsolved_puzzle[row][col] = is_single_value         
+                
+                # Remove from Possible list
+                list_possible_values[row, col].remove(is_single_value)         
+                
+                # Remove from Possible in row
+                for pos_col in range(0, grid_size):
+                    if is_single_value in P[row, pos_col]:
+                        list_possible_values[row, pos_col].remove(is_single_value)         
+                    
+                # Remove from Possible in col
+                for pos_row in range(0, grid_size):
+                    if is_single_value in list_possible_values[pos_row, col]:
+                        list_possible_values[pos_row, col].remove(is_single_value)         
+                
+                # Remove from Possible in cube
+                row_index = row//3*3
+                col_index = col//3*3
+                for i in range(row_index, row_index+3):
+                    for j in range(col_index, col_index+3):
+                        if is_single_value in list_possible_values[i, j]:
+                            list_possible_values[i, j].remove(is_single_value)
+    
+    #return the puzzle array
+    return unsolved_puzzle
+ 
+
+#This method is call by update_empty_blocks(,) to return the array of posible set of values for each block
+def possible_set_values(unsolved_puzzle, grid_size, valid_set):
+    #create an empty array to store the list of possible values 
+        list_possible_values = np.empty(shape=[9,9], dtype=object )
+
+    # Create Possible values of 1..9 for each Cell
+        for row in range(0, grid_size):
+            for col in range(0, grid_size):
+                if unsolved_puzzle[row][col] == 0:
+                    
+                    # Create possible values in row and subtract from full set
+                    r = valid_set - set(unsolved_puzzle[row])         
+                    
+                    # Create possible values in column and subtract
+                    c = r - set(unsolved_puzzle[:, col])         
+                    
+                    # Create possible values in cube and subtract
+                    row_index = (row//3) * 3
+                    col_index = (col//3) * 3
+                    list_possible_values[row][col] = list(c - set(unsolved_puzzle[row_index:row_index+3, col_index:col_index+3].flatten()))
+    
+        return list_possible_values
 
 
 #This is Level 2 - step 2: ask the user if they want to play again. This is repeated in Level 3 - step 1
@@ -69,3 +135,25 @@ print("\n" + is_puzzle_solved(filled_puzzle, puzzle_grid_size, valid_set))
 #This is Level 2 - test method here
 user_answer = ask_for_replay()
 print(f"The user answered: '{user_answer}'")
+
+
+#Testing the auto solving sudoku
+#try:
+#my_file = open("unsolved_puzzle/puzzle_1.txt", "rb") #with open('unsolved_puzzle/puzzle_1.txt', "rb") as my_file:
+#puzzle_file = np.load(my_file)
+#except ValueError as e:
+   # print("{}".format(e))
+
+puzzle_file = np.array([
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 2, 0, 0, 0, 0, 0, 8, 4],
+    [0, 3, 0, 0, 0, 0, 0, 7, 0],
+    [0, 0, 4, 0, 0, 0, 6, 0, 0],
+    [0, 0, 0, 2, 0, 3, 0, 0, 0],
+    [0, 0, 5, 0, 0, 0, 9, 0, 0],
+    [0, 0, 6, 0, 9, 0, 5, 0, 0],
+    [0, 7, 0, 0, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 5, 0, 0, 0, 0]
+])
+solve_puzzle = update_empty_blocks(puzzle_file, puzzle_grid_size, valid_set)
+print("\n" + is_puzzle_solved(solve_puzzle, puzzle_grid_size, valid_set))
