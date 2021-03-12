@@ -81,6 +81,9 @@ def update_empty_blocks(unsolved_puzzle, grid_size, valid_set):
 def possible_set_values(unsolved_puzzle, grid_size, valid_set):
     #create an empty array to store the list of possible values 
         list_possible_values = np.empty(shape=[9,9], dtype=object )
+        for r in range(0, grid_size):
+            for c in range(0, grid_size):
+                list_possible_values[r, c] = []
 
     # Create Possible values of 1..9 for each Cell
         for row in range(0, grid_size):
