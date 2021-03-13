@@ -41,7 +41,7 @@ def is_puzzle_solved(puzzle_filled, grid_size, valid_set):
         grid_size (int): the number of rows or columns
         valid_set (set): it is the set {1, 2, 3, 4, 5, 6, 7, 8, 9}
 '''
-def update_empty_blocks(unsolved_puzzle, grid_size, valid_set):
+def update_empty_blocks(unsolved_puzzle, grid_size=9, valid_set={1, 2, 3, 4, 5, 6, 7, 8, 9}):
     # Process grid with Possible array values
     list_possible_values = possible_set_values(unsolved_puzzle, grid_size, valid_set)
 
@@ -57,7 +57,7 @@ def update_empty_blocks(unsolved_puzzle, grid_size, valid_set):
                 
                 # Remove from Possible in row
                 for pos_col in range(0, grid_size):
-                    if is_single_value in P[row, pos_col]:
+                    if is_single_value in list_possible_values[row, pos_col]:
                         list_possible_values[row, pos_col].remove(is_single_value)         
                     
                 # Remove from Possible in col
@@ -100,7 +100,7 @@ def possible_set_values(unsolved_puzzle, grid_size, valid_set):
                     row_index = (row//3) * 3
                     col_index = (col//3) * 3
                     list_possible_values[row][col] = list(c - set(unsolved_puzzle[row_index:row_index+3, col_index:col_index+3].flatten()))
-        print(list_possible_values)
+        print(list_possible_values) #remember to delete
         return list_possible_values
 
 
@@ -141,11 +141,6 @@ print(f"The user answered: '{user_answer}'")
 
 
 #Testing the auto solving sudoku
-#try:
-#my_file = open("unsolved_puzzle/puzzle_1.txt", "rb") #with open('unsolved_puzzle/puzzle_1.txt', "rb") as my_file:
-#puzzle_file = np.load(my_file)
-#except ValueError as e:
-   # print("{}".format(e))
 
 puzzle_file = np.array([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -159,5 +154,7 @@ puzzle_file = np.array([
     [0, 0, 0, 0, 5, 0, 0, 0, 0]
 ])
 
+print("\n This is the solved puzzle - ")
 solve_puzzle = update_empty_blocks(puzzle_file, puzzle_grid_size, valid_set)
+print(solve_puzzle)
 print("\n" + is_puzzle_solved(solve_puzzle, puzzle_grid_size, valid_set))
