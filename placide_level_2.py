@@ -41,7 +41,7 @@ def is_puzzle_solved(puzzle_filled, grid_size, valid_set):
         grid_size (int): the number of rows or columns
         valid_set (set): it is the set {1, 2, 3, 4, 5, 6, 7, 8, 9}
 '''
-def update_empty_blocks(unsolved_puzzle, grid_size, valid_set):
+def update_empty_blocks(unsolved_puzzle, grid_size=9, valid_set={1, 2, 3, 4, 5, 6, 7, 8, 9}):
     # Process grid with Possible array values
     list_possible_values = possible_set_values(unsolved_puzzle, grid_size, valid_set)
 
