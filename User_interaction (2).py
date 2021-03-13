@@ -18,7 +18,7 @@ grid = np.array([[0,0,0,0,0,0,0,0,0],
 np.concatenate([grid])
                                                                    #Take in user input and keeps code active till specified:
 while True:
-    print(grid)0 
+    print(grid) 
     col_input, row_input, user_input=input("Enter inputs").split()
     col_value = int(col_input)
     row_value = int(row_input)
