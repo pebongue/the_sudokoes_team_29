@@ -31,11 +31,7 @@ while True:
         if grid_value > 0:
             print("Unabe to relpace value")
             pass
-                                                                   #Checks to see if value exists in row and columb combo:
-        elif ((grid[col_value]).all()) or ((grid[row_value]).all()) == False:
-            print("Value of : "+ str(user_input_value) +" already exists in row and columb")
-            pass
-                                                                   #Inserts user input if conditions are met:
+                                                                  #Inserts user input if conditions are met:
         else:
                 grid[col_value][row_value] = user_input_value
                 print(grid)
