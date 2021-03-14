@@ -13,7 +13,7 @@ grid = np.array([[0,0,0,0,0,0,0,0,0],
                  [0,7,0,0,0,0,0,0,0],
                  [0,0,0,0,5,0,0,0,0]
                                          ])
-
+print(grid.shape)
                                                                    #Convert our array into a 2D array:
 np.concatenate([grid])
                                                                    #Take in user input and keeps code active till specified:

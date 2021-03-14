@@ -21,11 +21,11 @@ def get_array_from_file(filename):
 
 
 def play_game(unsolved_puzzle):
-        np.concatenate([unsolved_puzzle])
+        #np.concatenate([unsolved_puzzle])
                                                                    #Take in user input and keeps code active till specified:
         while True:
             print(unsolved_puzzle)
-            col_input, row_input, user_input=input("Enter inputs as row 'col your_number' (without quotes and consider zero indexing): ").split()
+            col_input, row_input, user_input=input("Enter inputs as 'row col your_number' (without quotes and consider zero indexing): ").split()
             col_value = int(col_input)
             row_value = int(row_input)
             user_input_value = int(user_input)
@@ -66,11 +66,11 @@ def play_game(unsolved_puzzle):
     Level 2 - step 1: This method checks if the user's solution for the puzzle_array is valid or not, and return a string
 '''
 def is_puzzle_solved(puzzle_filled, grid_size, valid_set):
-# Check each row
+    # Check each row
     for row in range(0, grid_size):
       is_row_correct = (set(puzzle_filled[row]) == valid_set)   
 
-# Check each column
+    # Check each column
     for col in range(0, grid_size):
         is_col_correct = (set(puzzle_filled[:, col]) == valid_set)   
 
@@ -79,7 +79,7 @@ def is_puzzle_solved(puzzle_filled, grid_size, valid_set):
         for unit_col in range(0, grid_size, 3):
             is_unit_correct = (set(puzzle_filled[unit_row:unit_row+3, unit_col:unit_col+3].flatten()) == valid_set)
 
-#return correct if there are no duplicate 1 to 9 values accross row and col, else incorrect                
+    #return correct if there are no duplicate 1 to 9 values accross row and col, else incorrect                
     if is_row_correct and is_col_correct and is_unit_correct:
         return "Correct solution!"
     else:
@@ -207,7 +207,6 @@ def possible_set_values(unsolved_puzzle, grid_size, valid_set):
 def solve_sudoku(puzzle):                #Assumption: puzzle is a file name for a puzzle
     #Edit the code Below Here
     puzzle_from_file = get_array_from_file(puzzle)
-    print(puzzle_from_file)
     puzzle_filled = play_game(puzzle_from_file) #user play the game
     is_puzzle_solved(puzzle_filled) #system check if puzzle is solved
 

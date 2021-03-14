@@ -12,6 +12,7 @@ def open_file(filename):
     arrayS = np.array(structure)
     print(arrayS)
     print(type(arrayS))
+    print(arrayS.shape)
 #=======
     #list_file = file.read().split(",\n ")
     #array_file = np.array(list_file)
