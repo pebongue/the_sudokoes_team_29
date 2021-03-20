@@ -12,7 +12,8 @@ def open_file(filename):
     structure = '\n'.join([''.join(['{:1}'.format(item) for item in row]) for row in list_file])
 
     # make our rows and columns into an array
-    arrayS = np.array(structure)
+    #arrayS = np.array(structure)
+    arrayS = np.loadtxt(filename)
 
     # Display our array puzzle
     print(arrayS)
